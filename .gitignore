@@ -1,0 +1,9 @@
+# Local terraform state
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+*.tfvars.json
+
+# Personal secrets
+.env
