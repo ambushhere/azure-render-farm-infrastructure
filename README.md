@@ -1,19 +1,7 @@
 # Azure Render Farm Infrastructure (IaC)
 ![Terraform CI](https://github.com/ambushhere/azure-render-farm-infrastructure/actions/workflows/ci.yml/badge.svg)
 
-## Infrastructure Architecture
 
-```mermaid
-graph LR
-    User((Admin)) -->|Terraform| Azure[Azure Cloud]
-    subgraph VNet [Virtual Network]
-        subgraph Subnet [Render Subnet]
-            VMSS[VM Scale Set: Render Nodes]
-        end
-        Storage[(Azure Storage: textures/frames)]
-    end
-    Azure --> VNet
-    VMSS -.->|Read/Write| Storage
 ## Project Overview
 This project demonstrates the automated deployment of a scalable 3D rendering infrastructure on Microsoft Azure using **Terraform**. 
 
