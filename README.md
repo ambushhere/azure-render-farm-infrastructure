@@ -18,6 +18,16 @@ Drawing from my **10+ years of experience in technical 3D production**, I design
 - **Efficiency:** Using IaC eliminates manual configuration errors and ensures reproducibility.
 - **Cost Management:** Infrastructure can be destroyed or scaled to zero when not in use.
 
+## 🐳 Containerization with Docker
+
+This project also includes a `Dockerfile` for packaging Blender, a popular 3D rendering application, into a Docker container. This demonstrates the ability to:
+
+- **Containerize software:** Package complex applications like Blender for consistent execution.
+- **Microservices approach:** Run rendering tasks as isolated, portable containers on Azure VM Scale Sets.
+- **Scalable compute:** Easily deploy and manage Blender instances across a fleet of render nodes.
+
+This `Dockerfile` is prepared to run Blender in headless mode for rendering, which is typical for cloud-based render farms.
+
 ## How to Run
 1. Ensure you have the Azure CLI and Terraform installed.
 2. Run `terraform init` to initialize the project.
