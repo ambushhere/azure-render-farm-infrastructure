@@ -1,4 +1,5 @@
 # Azure Render Farm Infrastructure (IaC)
+![Terraform CI](https://github.com/ambushhere/azure-render-farm-infrastructure/actions/workflows/ci.yml/badge.svg)
 
 ## Project Overview
 This project demonstrates the automated deployment of a scalable 3D rendering infrastructure on Microsoft Azure using **Terraform**. 
