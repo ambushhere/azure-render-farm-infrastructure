@@ -12,13 +12,13 @@ provider "azurerm" {
   features {}
 }
 
-# 2. Resource Group: Logical container for all Render Farm assets
+# 2. Resource Group
 resource "azurerm_resource_group" "render_rg" {
   name     = var.resource_group_name
   location = var.location
 }
 
-# 3. Virtual Network: Isolated network environment for compute nodes
+# 3. Virtual Network
 resource "azurerm_virtual_network" "render_vnet" {
   name                = "render-vnet"
   address_space       = ["10.0.0.0/16"]
@@ -26,7 +26,7 @@ resource "azurerm_virtual_network" "render_vnet" {
   resource_group_name = azurerm_resource_group.render_rg.name
 }
 
-# 4. Subnet: Dedicated segment for the Rendering Scale Set
+# 4. Subnet
 resource "azurerm_subnet" "render_subnet" {
   name                 = "render-nodes-subnet"
   resource_group_name  = azurerm_resource_group.render_rg.name
@@ -34,32 +34,31 @@ resource "azurerm_subnet" "render_subnet" {
   address_prefixes     = ["10.0.1.0/24"]
 }
 
-# 5. Storage Account: High-performance storage for 3D textures, assets, and output frames
+# 5. Storage Account with unique naming
 resource "azurerm_storage_account" "render_storage" {
-  name                     = "rendersdata${random_string.suffix.result}" # Ensures globally unique name
+  name                     = "rendersdata${random_string.suffix.result}"
   resource_group_name      = azurerm_resource_group.render_rg.name
   location                 = azurerm_resource_group.render_rg.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }
 
-# Random string helper to avoid naming conflicts in Azure Storage
 resource "random_string" "suffix" {
   length  = 6
   special = false
   upper   = false
 }
 
-# 6. Linux Virtual Machine Scale Set: The core compute engine of the farm
+# 6. Linux Virtual Machine Scale Set
 resource "azurerm_linux_virtual_machine_scale_set" "render_nodes" {
   name                = "render-nodes-set"
   resource_group_name = azurerm_resource_group.render_rg.name
   location            = azurerm_resource_group.render_rg.location
-  sku                 = var.vm_sku # Defined in variables.tf
+  sku                 = var.vm_sku
   instances           = 2
   admin_username      = "renderadmin"
 
-  admin_password                  = "P@ssw0rd1234!" 
+  admin_password                  = "P@ssw0rd1234!"
   disable_password_authentication = false
 
   source_image_reference {
@@ -72,6 +71,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "render_nodes" {
   network_interface {
     name    = "render-nic"
     primary = true
+
     ip_configuration {
       name      = "internal"
       primary   = true
@@ -84,10 +84,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "render_nodes" {
     caching              = "ReadWrite"
   }
 
-  # Тэги должны быть ВНУТРИ фигурных скобок ресурса azurerm_linux_virtual_machine_scale_set
   tags = {
     Environment = "Development"
     Project     = "RenderFarm"
     CostCenter  = "3D-Production"
   }
-} 
+}
