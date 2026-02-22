@@ -1,5 +1,6 @@
 # Azure Render Farm Infrastructure (IaC)
 ![Terraform CI](https://github.com/ambushhere/azure-render-farm-infrastructure/actions/workflows/ci.yml/badge.svg)
+<img width="2816" height="1536" alt="Gemini_Generated_Image_ao2iheao2iheao2i" src="https://github.com/user-attachments/assets/768a994f-9b0a-42d2-82e9-14441bdb6b6a" />
 
 
 ## Project Overview
