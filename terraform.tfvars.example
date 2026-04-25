@@ -1,0 +1,11 @@
+# Copy this file to terraform.tfvars and replace placeholder values.
+
+resource_group_name   = "render-farm-rg"
+location              = "Norway East"
+vm_sku                = "Standard_DS1_v2"
+vmss_instances        = 2
+admin_username        = "renderadmin"
+environment           = "Development"
+
+# SSH public key content, e.g. from ~/.ssh/id_ed25519.pub
+admin_ssh_public_key  = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI... your_email@example.com"

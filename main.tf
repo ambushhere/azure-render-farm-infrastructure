@@ -1,9 +1,15 @@
 # 1. Terraform Configuration and Provider Setup
 terraform {
+  required_version = ">= 1.5.0"
+
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.0"
+      version = "~> 3.116"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.6"
     }
   }
 }
@@ -41,6 +47,10 @@ resource "azurerm_storage_account" "render_storage" {
   location                 = azurerm_resource_group.render_rg.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+
+  min_tls_version           = "TLS1_2"
+  allow_blob_public_access  = false
+  shared_access_key_enabled = true
 }
 
 resource "random_string" "suffix" {
@@ -55,11 +65,15 @@ resource "azurerm_linux_virtual_machine_scale_set" "render_nodes" {
   resource_group_name = azurerm_resource_group.render_rg.name
   location            = azurerm_resource_group.render_rg.location
   sku                 = var.vm_sku
-  instances           = 2
-  admin_username      = "renderadmin"
+  instances           = var.vmss_instances
+  admin_username      = var.admin_username
 
-  admin_password                  = "P@ssw0rd1234!"
-  disable_password_authentication = false
+  disable_password_authentication = true
+
+  admin_ssh_key {
+    username   = var.admin_username
+    public_key = var.admin_ssh_public_key
+  }
 
   source_image_reference {
     publisher = "Canonical"
@@ -85,7 +99,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "render_nodes" {
   }
 
   tags = {
-    Environment = "Development"
+    Environment = var.environment
     Project     = "RenderFarm"
     CostCenter  = "3D-Production"
   }
