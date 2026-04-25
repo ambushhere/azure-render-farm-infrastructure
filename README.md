@@ -23,7 +23,7 @@ Drawing from **10+ years of technical 3D production experience**, this project t
 - No hardcoded admin passwords
 - Storage account hardened with:
   - `min_tls_version = "TLS1_2"`
-  - `allow_blob_public_access = false`
+  - `allow_nested_items_to_be_public = false`
 
 ## Variables
 Defined in `variables.tf`:
