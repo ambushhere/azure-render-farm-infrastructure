@@ -18,6 +18,13 @@ Drawing from **10+ years of technical 3D production experience**, this project t
 - **Efficiency:** IaC reduces manual configuration errors and improves reproducibility.
 - **Cost Management:** Infrastructure can be destroyed or scaled down when not in use.
 
+## 📈 Result / Impact
+
+- Reduced security risk by removing hardcoded credentials and enforcing SSH-key based access.
+- Improved baseline security posture with hardened storage/account settings and TLS 1.2 minimum.
+- Increased delivery confidence via Terraform CI checks (format/validate) before changes reach main.
+- Made infrastructure reproducible and easier to operate through modular IaC and documented variables.
+
 ## Security Defaults in This Repo
 - SSH-only VM access (`disable_password_authentication = true`)
 - No hardcoded admin passwords
